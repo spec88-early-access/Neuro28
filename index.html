@@ -1,28 +1,43 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Neuro28 – WhatsApp & Voice Automation</title>
-  <meta name="description" content="Neuro28 hilft Unternehmen, keine Kundenanfragen mehr zu verlieren – durch WhatsApp- & Voice-Automatisierung mit Terminbuchung.">
+  <meta name="description" content="Neuro28 hilft Unternehmen, keine Kundenanfragen mehr zu verlieren – durch WhatsApp- & Voice-Automatisierung mit Terminbuchung. DSGVO-konform, monatlich kündbar." />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#0B0F14;--card:#121824;--muted:#A8B3C7;--text:#F5F7FA;--brand:#E0B760;--accent:#2EF7D0;--ring:rgba(46,247,208,.3)}
+    :root{
+      --bg:#0B0F14; --card:#121824; --muted:#A8B3C7; --text:#F5F7FA;
+      --brand:#E0B760; --accent:#2EF7D0; --ring:rgba(46,247,208,.35);
+    }
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;line-height:1.6}
+    html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;line-height:1.6}
     a{color:var(--accent);text-decoration:none}
     .container{max-width:1100px;margin:0 auto;padding:0 20px}
-    header{position:sticky;top:0;backdrop-filter:blur(8px);background:rgba(11,15,20,.85);border-bottom:1px solid rgba(255,255,255,.06);z-index:10}
-    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    header{position:sticky;top:0;backdrop-filter:blur(10px);background:rgba(11,15,20,.85);border-bottom:1px solid rgba(255,255,255,.06);z-index:10}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
     .brand{display:flex;align-items:center;gap:10px}
     .logo{width:28px;height:28px;border-radius:8px;background:radial-gradient(60% 60% at 40% 40%, var(--brand), #9C7B2A 70%);box-shadow:0 0 0 6px rgba(224,183,96,.08)}
-    .btn{display:inline-block;padding:12px 18px;border-radius:12px;border:1px solid rgba(255,255,255,.12);transition:.2s}
-    .btn:hover{transform:translateY(-1px);box-shadow:0 10px 24px -10px var(--ring)}
+    .menu{display:flex;gap:10px;align-items:center}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:12px;border:1px solid rgba(255,255,255,.12);will-change:transform,box-shadow}
     .btn-primary{background:var(--accent);color:#071017;border:none;font-weight:700}
     .btn-ghost{background:transparent}
-    .hero{padding:70px 0 30px;position:relative}
-    .glow{position:absolute;inset:-20%;background:radial-gradient(60% 40% at 50% 0%, rgba(46,247,208,.18), transparent 60%),radial-gradient(50% 50% at 90% 20%, rgba(224,183,96,.18), transparent 60%)}
-    .hero h1{font-size:40px;line-height:1.15;margin:0 0 10px}
+    /* leichte Motion */
+    @media (prefers-reduced-motion: no-preference){
+      .btn{transition:transform .2s ease, box-shadow .2s ease, opacity .2s ease}
+      .btn:hover{transform:translateY(-2px);box-shadow:0 14px 30px -14px var(--ring)}
+      .btn:active{transform:translateY(0);box-shadow:none;opacity:.95}
+      .hero .glow{animation: floaty 12s ease-in-out infinite alternate}
+      @keyframes floaty { from{transform:translateY(0)} to{transform:translateY(10px)} }
+    }
+    .lang{font-size:12px;color:var(--muted);margin-left:4px}
+    .lang a{color:#cfd6e4}
+    .hero{padding:70px 0 28px;position:relative;overflow:hidden}
+    .glow{position:absolute;inset:-20%;background:
+      radial-gradient(60% 40% at 50% 0%, rgba(46,247,208,.18), transparent 60%),
+      radial-gradient(50% 50% at 90% 20%, rgba(224,183,96,.18), transparent 60%)}
+    h1{font-size:40px;line-height:1.15;margin:0 0 10px}
     .muted{color:var(--muted)}
     .inline{display:inline-flex;gap:10px;flex-wrap:wrap}
     .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
@@ -31,8 +46,13 @@
     .pricegrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
     .price{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:24px}
     .big{font-size:34px;font-weight:800}
+    details summary{cursor:pointer}
     footer{padding:26px 0;color:var(--muted);border-top:1px solid rgba(255,255,255,.06);margin-top:30px}
-    @media(max-width:900px){.grid{grid-template-columns:1fr}.pricegrid{grid-template-columns:1fr}.hero h1{font-size:32px}}
+    @media(max-width:900px){
+      .grid{grid-template-columns:1fr}
+      .pricegrid{grid-template-columns:1fr}
+      h1{font-size:32px}
+    }
   </style>
 </head>
 <body>
@@ -40,25 +60,26 @@
     <div class="container nav">
       <div class="brand">
         <div class="logo" aria-hidden="true"></div>
-        <div><strong>Neuro28</strong> <span class="muted">• Business Services</span></div>
+        <div><strong>Neuro28</strong> <span class="muted">• <span id="navTag">Business Services</span></span></div>
       </div>
-      <nav class="menu">
-        <a href="#leistungen" class="btn btn-ghost">Leistungen</a>
-        <a href="#preise" class="btn btn-ghost">Preise</a>
-        <a href="https://calendly.com/davidyurko28/gesprach" target="_blank" rel="noopener" class="btn btn-primary">Termin buchen</a>
+      <nav class="menu" aria-label="Navigation">
+        <a href="#leistungen" class="btn btn-ghost" id="navLeistungen">Leistungen</a>
+        <a href="#preise" class="btn btn-ghost" id="navPreise">Preise</a>
+        <a href="https://calendly.com/davidyurko28/gesprach" target="_blank" rel="noopener" class="btn btn-primary" id="navBuchen">Termin buchen</a>
+        <span class="lang">DE · <a href="#" id="toEN">EN</a></span>
       </nav>
     </div>
   </header>
 
   <section class="hero">
-    <div class="glow"></div>
+    <div class="glow" aria-hidden="true"></div>
     <div class="container">
-      <h1>Automatisierte Kommunikation. Keine Anfragen mehr verlieren.</h1>
-      <p class="muted">WhatsApp-Assistent, Voice-Bot und Terminbuchung – in einem System. DSGVO-konform und monatlich kündbar.</p>
+      <h1 id="heroH1">Automatisierte Kommunikation. Keine Anfragen mehr verlieren.</h1>
+      <p class="muted" id="heroP">WhatsApp-Assistent, Voice-Bot und Terminbuchung – in einem System. DSGVO-konform und monatlich kündbar.</p>
       <div class="inline" style="margin-top:10px">
-        <a href="https://calendly.com/davidyurko28/gesprach" target="_blank" rel="noopener" class="btn btn-primary">Jetzt Beratung sichern</a>
-        <a href="#preise" class="btn btn-ghost">Preise ansehen</a>
-        <a href="https://wa.me/4915678400627?text=Hallo%2C%20ich%20interessiere%20mich%20f%C3%BCr%20Neuro28." target="_blank" rel="noopener" class="btn">WhatsApp schreiben</a>
+        <a href="https://calendly.com/davidyurko28/gesprach" target="_blank" rel="noopener" class="btn btn-primary" id="ctaBuchen">Jetzt Beratung sichern</a>
+        <a href="#preise" class="btn btn-ghost" id="ctaPreise">Preise ansehen</a>
+        <a href="https://wa.me/4915678400627?text=Hallo%2C%20ich%20interessiere%20mich%20f%C3%BCr%20Neuro28." target="_blank" rel="noopener" class="btn" id="ctaWhatsApp">WhatsApp schreiben</a>
       </div>
     </div>
   </section>
@@ -66,113 +87,282 @@
   <section id="leistungen" class="container">
     <div class="grid">
       <div class="card">
-        <h3>WhatsApp Assistent</h3>
-        <p class="muted">Menü, Antworten, Preislisten, Standort & Terminlink. Optional Erinnerungen & Follow-ups.</p>
+        <h3 id="f1">WhatsApp Assistent</h3>
+        <p class="muted" id="f1t">Menü, Antworten, Preislisten, Standort & Terminlink. Optional Erinnerungen & Follow-ups.</p>
       </div>
       <div class="card">
-        <h3>Voice Assistent</h3>
-        <p class="muted">Telefon-Bot nimmt Anrufe an, versteht Intents („Termin“, „Öffnungszeiten“) und sendet Bestätigungen.</p>
+        <h3 id="f2">Voice Assistent</h3>
+        <p class="muted" id="f2t">Telefon-Bot nimmt Anrufe an, versteht Intents („Termin“, „Öffnungszeiten“) und sendet Bestätigungen.</p>
       </div>
       <div class="card">
-        <h3>Kalender & CRM</h3>
-        <p class="muted">Buchungen via Calendly/TidyCal. Alle Anfragen protokolliert. Gespräche nur nach Vereinbarung (Mo–So).</p>
+        <h3 id="f3">Kalender & CRM</h3>
+        <p class="muted" id="f3t">Buchungen via Calendly/TidyCal. Alle Anfragen protokolliert. Gespräche nur nach Vereinbarung (Mo–So).</p>
       </div>
     </div>
   </section>
 
   <section id="preise" class="pricing">
     <div class="container">
-      <h2>Preise</h2>
+      <h2 id="prH">Preise</h2>
       <div class="pricegrid">
         <div class="price">
-          <h3>Starter</h3>
-          <div class="big">199€ <span class="muted">/ Monat</span></div>
-          <div class="muted">Setup: <strong>149€</strong></div>
-          <ul class="muted">
+          <h3 id="p1h">Starter</h3>
+          <div class="big"><span id="p1v">199€</span> <span class="muted" id="pmo">/ Monat</span></div>
+          <div class="muted" id="p1s">Setup: <strong>149€</strong></div>
+          <ul class="muted" id="p1l">
             <li>WhatsApp-Assistent (Menü & Antworten)</li>
             <li>Terminbuchung (Calendly/TidyCal)</li>
             <li>Universelle Schnellantworten</li>
             <li>Flexible Gesprächstermine (Mo–So)</li>
           </ul>
-          <a href="https://calendly.com/davidyurko28/gesprach" target="_blank" rel="noopener" class="btn btn-primary">Starter anfragen</a>
+          <a href="https://calendly.com/davidyurko28/gesprach" target="_blank" rel="noopener" class="btn btn-primary" id="p1c">Starter anfragen</a>
         </div>
         <div class="price">
-          <h3>Pro</h3>
-          <div class="big">499–699€ <span class="muted">/ Monat</span></div>
-          <div class="muted">Setup: <strong>299€</strong></div>
-          <ul class="muted">
+          <h3 id="p2h">Pro</h3>
+          <div class="big"><span id="p2v">499–699€</span> <span class="muted">/ Monat</span></div>
+          <div class="muted" id="p2s">Setup: <strong>299€</strong></div>
+          <ul class="muted" id="p2l">
             <li>WhatsApp + Voice (Telefon-Bot)</li>
             <li>Erinnerungen & Follow-ups</li>
             <li>Individuelle Antworten & PDFs/Links</li>
             <li>Monatlicher Kurz-Report</li>
           </ul>
-          <a href="https://calendly.com/davidyurko28/gesprach" target="_blank" rel="noopener" class="btn btn-primary">Pro anfragen</a>
+          <a href="https://calendly.com/davidyurko28/gesprach" target="_blank" rel="noopener" class="btn btn-primary" id="p2c">Pro anfragen</a>
         </div>
       </div>
-      <p class="muted" style="margin-top:10px">Setup entfällt bei Abschluss am Tag des Erstgesprächs.</p>
+      <p class="muted" style="margin-top:10px" id="offer">Setup entfällt bei Abschluss am Tag des Erstgesprächs.</p>
     </div>
   </section>
 
-  <!-- Rechtliches (vollständig) -->
   <section class="container" id="rechtliches" style="padding:34px 0">
     <div class="card">
-      <h2>Rechtliches</h2>
+      <h2 id="legalH">Rechtliches</h2>
 
       <details open>
-        <summary><strong>Impressum (§5 TMG)</strong></summary>
-        <p><strong>Dienstanbieter:</strong><br>
-        Neuro28 Business Services – Inhaber: David Romanovic Yurko</p>
-        <p><strong>Geschäftsadresse:</strong><br>
-        Tulpenstraße 4<br>
-        63128 Dietzenbach<br>
-        Deutschland</p>
-        <p><strong>Kontakt:</strong><br>
-        Tel.: +49 15678 400627<br>
+        <summary><strong id="impTitle">Impressum (§5 TMG)</strong></summary>
+        <p><strong id="impProvLabel">Dienstanbieter:</strong><br>
+        <span id="impProv">Neuro28 Business Services – Inhaber: David Romanovic Yurko</span></p>
+
+        <p><strong id="impAddrLabel">Geschäftsadresse:</strong><br>
+        Tulpenstraße 4<br>63128 Dietzenbach<br>Deutschland</p>
+
+        <p><strong id="impContactLabel">Kontakt:</strong><br>
+        Tel.: <a href="tel:+4915678400627">+49 15678 400627</a><br>
         E-Mail: <a href="mailto:Davidyurko28@gmail.com">Davidyurko28@gmail.com</a></p>
-        <p><strong>USt-ID:</strong> (wird nachträglich ergänzt, sofern vorhanden)</p>
-        <p><strong>Inhaltlich verantwortlich i.S.d. § 18 Abs. 2 MStV:</strong> David Romanovic Yurko</p>
-        <p><strong>Online-Streitbeilegung:</strong> EU-Plattform: <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr</a></p>
+
+        <p><strong id="vatLabel">USt-ID:</strong> <span id="vatNote">(wird nachträglich ergänzt, sofern vorhanden)</span></p>
+        <p><strong id="respLabel">Inhaltlich verantwortlich i.S.d. § 18 Abs. 2 MStV:</strong> David Romanovic Yurko</p>
+        <p><strong id="odrLabel">Online-Streitbeilegung:</strong> <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">EU-Plattform</a></p>
       </details>
 
       <details>
-        <summary><strong>Datenschutzerklärung (DSGVO – Auszug)</strong></summary>
-        <p><strong>Verantwortlicher:</strong> Neuro28 Business Services – David Romanovic Yurko, Deutschland, <a href="mailto:Davidyurko28@gmail.com">Davidyurko28@gmail.com</a></p>
-        <p><strong>Arten der verarbeiteten Daten:</strong> Name, Kontakt (Telefon/E-Mail), Kommunikationsdaten (WhatsApp-Nachrichten), Termin-Daten (Datum/Zeit), ggf. technische Daten (IP, Browser, Zeitstempel).</p>
-        <p><strong>Zwecke:</strong> Beantwortung von Anfragen, Terminvereinbarung, Vertragsdurchführung, Qualitätssicherung.</p>
-        <p><strong>Rechtsgrundlagen (Art. 6 Abs. 1 DSGVO):</strong> b) Vertrag/Anbahnung, f) berechtigte Interessen (effiziente Kommunikation), a) Einwilligung (wo erforderlich).</p>
-        <p><strong>Dienstleister/Empfänger:</strong></p>
-        <ul>
-          <li><strong>WhatsApp Business</strong> (Meta Platforms Ireland Ltd.) – Kommunikation per WhatsApp.</li>
-          <li><strong>Calendly LLC (USA)</strong> – Terminbuchung; Standardvertragsklauseln (SCCs).</li>
-          <li><strong>Twilio Inc.</strong> – Telefondienste/Voice-Bot (bei Pro-Paket); ggf. SCCs.</li>
-          <li><strong>Zapier/Make</strong> – Automatisierung, Datenfluss zwischen Diensten; SCCs/DPAs.</li>
+        <summary><strong id="ppTitle">Datenschutzerklärung (DSGVO – Auszug)</strong></summary>
+        <p><strong id="ppCtrlLabel">Verantwortlicher:</strong> Neuro28 Business Services – David Romanovic Yurko, Deutschland, <a href="mailto:Davidyurko28@gmail.com">Davidyurko28@gmail.com</a></p>
+        <p><strong id="ppDataLabel">Arten der verarbeiteten Daten:</strong> Name, Kontakt (Telefon/E-Mail), Kommunikationsdaten (WhatsApp-Nachrichten), Termin-Daten (Datum/Zeit), ggf. technische Daten (IP, Browser, Zeitstempel).</p>
+        <p><strong id="ppPurposeLabel">Zwecke:</strong> Beantwortung von Anfragen, Terminvereinbarung, Vertragsdurchführung, Qualitätssicherung.</p>
+        <p><strong id="ppLawLabel">Rechtsgrundlagen (Art. 6 Abs. 1 DSGVO):</strong> b) Vertrag/Anbahnung, f) berechtigte Interessen, a) Einwilligung (wo erforderlich).</p>
+        <p><strong id="ppVendorsLabel">Dienstleister/Empfänger:</strong></p>
+        <ul id="ppVendors">
+          <li>WhatsApp Business (Meta Platforms Ireland Ltd.) – Kommunikation.</li>
+          <li>Calendly LLC (USA) – Terminbuchung; Standardvertragsklauseln (SCCs).</li>
+          <li>Twilio Inc. – Telefondienste/Voice-Bot (bei Pro-Paket); ggf. SCCs.</li>
+          <li>Zapier/Make – Automatisierung; SCCs/DPAs.</li>
         </ul>
-        <p><strong>Speicherdauer:</strong> so lange wie zur Zweckerfüllung erforderlich bzw. gemäß Aufbewahrungspflichten.</p>
-        <p><strong>Betroffenenrechte:</strong> Auskunft, Berichtigung, Löschung, Einschränkung, Übertragbarkeit, Widerspruch; Beschwerde bei einer Aufsichtsbehörde.</p>
-        <p><strong>Sicherheitsmaßnahmen:</strong> TLS-Transportverschlüsselung, Zugriffsbeschränkungen, Datenminimierung.</p>
-        <p class="muted"><em>Hinweis:</em> Vorlage – für Livebetrieb Anbieter-DPAs/Links ergänzen und prüfen lassen.</p>
+        <p><strong id="ppRetentionLabel">Speicherdauer:</strong> so lange wie zur Zweckerfüllung erforderlich bzw. gemäß Aufbewahrungspflichten.</p>
+        <p><strong id="ppRightsLabel">Betroffenenrechte:</strong> Auskunft, Berichtigung, Löschung, Einschränkung, Übertragbarkeit, Widerspruch; Beschwerde bei einer Aufsichtsbehörde.</p>
+        <p><strong id="ppSecLabel">Sicherheitsmaßnahmen:</strong> TLS-Transportverschlüsselung, Zugriffsbeschränkungen, Datenminimierung.</p>
+        <p class="muted" id="ppNote"><em>Hinweis:</em> Vorlage – für Livebetrieb Anbieter-DPAs/Links ergänzen und prüfen lassen.</p>
       </details>
 
       <details>
-        <summary><strong>AGB (Kurzfassung)</strong></summary>
-        <ol class="muted">
-          <li><strong>Leistung:</strong> Einrichtung und Betrieb von WhatsApp/Voice-Automatisierung inkl. Terminbuchung.</li>
-          <li><strong>Laufzeit/Kündigung:</strong> monatlich kündbar mit 30 Tagen zum Monatsende.</li>
-          <li><strong>Vergütung:</strong> monatlich im Voraus gemäß Preisliste; Setup einmalig (erlässt du ggf. bei Abschluss am Erstgesprächstag).</li>
-          <li><strong>Mitwirkungspflichten:</strong> Kunde liefert Inhalte (Texte/Antworten/Preise) rechtzeitig.</li>
-          <li><strong>Verfügbarkeit/Haftung:</strong> „Best-Effort“; keine Haftung für Ausfälle Dritter (WhatsApp, Calendly, Twilio); im Übrigen Haftung nach Gesetz, begrenzt auf vertragstypische Schäden.</li>
-          <li><strong>Datenschutz:</strong> Verarbeitung gemäß Datenschutzerklärung.</li>
+        <summary><strong id="tosTitle">AGB (Kurzfassung)</strong></summary>
+        <ol class="muted" id="tosList">
+          <li>Leistung: Einrichtung und Betrieb von WhatsApp/Voice-Automatisierung inkl. Terminbuchung.</li>
+          <li>Laufzeit/Kündigung: monatlich kündbar mit 30 Tagen zum Monatsende.</li>
+          <li>Vergütung: monatlich im Voraus gemäß Preisliste; Setup einmalig (erlässt du ggf. bei Abschluss am Erstgesprächstag).</li>
+          <li>Mitwirkungspflichten: Kunde liefert Inhalte (Texte/Antworten/Preise) rechtzeitig.</li>
+          <li>Verfügbarkeit/Haftung: „Best-Effort“; keine Haftung für Ausfälle Dritter (WhatsApp, Calendly, Twilio); im Übrigen Haftung nach Gesetz, begrenzt auf vertragstypische Schäden.</li>
+          <li>Datenschutz: Verarbeitung gemäß Datenschutzerklärung.</li>
         </ol>
       </details>
     </div>
   </section>
 
   <footer>
-    <div class="container">© <span id="y"></span> Neuro28 • Business Services · <a href="#rechtliches">Impressum & Datenschutz</a></div>
+    <div class="container">© <span id="y"></span> Neuro28 • Business Services · <a href="#rechtliches" id="footLegal">Impressum & Datenschutz</a></div>
   </footer>
+
   <script>
+    // Jahr
     document.getElementById('y').textContent = new Date().getFullYear();
+    // Smooth scroll (fallback safe)
     try{document.documentElement.style.scrollBehavior='smooth'}catch(e){}
+
+    // DE/EN Wörterbuch
+    const T = {
+      en: {
+        navTag:"Business Services",
+        navLeistungen:"Features", navPreise:"Pricing", navBuchen:"Book a Call",
+        heroH1:"Never lose a customer inquiry again.",
+        heroP:"WhatsApp assistant, voice bot and booking — in one system. GDPR-compliant, cancel monthly.",
+        ctaBuchen:"Book consultation", ctaPreise:"See pricing", ctaWhatsApp:"Message on WhatsApp",
+        f1:"WhatsApp Assistant", f1t:"Menu, answers, price lists, location & booking link. Optional reminders & follow-ups.",
+        f2:"Voice Assistant", f2t:"Phone bot answers calls, understands intents (“booking”, “hours”) and sends confirmations.",
+        f3:"Calendar & CRM", f3t:"Booking via Calendly/TidyCal. Conversations logged. Calls by appointment (Mon–Sun).",
+        prH:"Pricing",
+        p1h:"Starter", p1v:"€199", pmo:"/ month", p1s:"Setup: €149",
+        p1l:[
+          "WhatsApp Assistant (menu & answers)",
+          "Booking (Calendly/TidyCal)",
+          "Universal quick replies",
+          "Flexible calls by appointment (Mon–Sun)"
+        ],
+        p1c:"Request Starter",
+        p2h:"Pro", p2v:"€499–699", p2s:"Setup: €299",
+        p2l:[
+          "WhatsApp + Voice (phone bot)",
+          "Reminders & follow-ups",
+          "Custom answers & PDFs/links",
+          "Monthly short report"
+        ],
+        p2c:"Request Pro",
+        offer:"Setup waived if you subscribe on the day of the first call.",
+        legalH:"Legal",
+        impTitle:"Imprint (German TMG)",
+        impProvLabel:"Provider:",
+        impProv:"Neuro28 Business Services – Owner: David Romanovic Yurko",
+        impAddrLabel:"Business address:",
+        impContactLabel:"Contact:",
+        vatLabel:"VAT ID:",
+        vatNote:"(to be added once available)",
+        respLabel:"Content responsible (German law):",
+        odrLabel:"Online dispute resolution:",
+        ppTitle:"Privacy Policy (GDPR – excerpt)",
+        ppCtrlLabel:"Controller:",
+        ppDataLabel:"Data processed:",
+        ppPurposeLabel:"Purpose:",
+        ppLawLabel:"Legal basis (Art. 6 GDPR):",
+        ppVendorsLabel:"Processors/Recipients:",
+        ppRetentionLabel:"Retention:",
+        ppRightsLabel:"Rights:",
+        ppSecLabel:"Security:",
+        ppNote:"Note: Template — add provider DPA links and have it reviewed for production.",
+        tosTitle:"Terms (short)",
+        footLegal:"Imprint & Privacy"
+      },
+      de: {
+        navTag:"Business Services",
+        navLeistungen:"Leistungen", navPreise:"Preise", navBuchen:"Termin buchen",
+        heroH1:"Automatisierte Kommunikation. Keine Anfragen mehr verlieren.",
+        heroP:"WhatsApp-Assistent, Voice-Bot und Terminbuchung – in einem System. DSGVO-konform und monatlich kündbar.",
+        ctaBuchen:"Jetzt Beratung sichern", ctaPreise:"Preise ansehen", ctaWhatsApp:"WhatsApp schreiben",
+        f1:"WhatsApp Assistent", f1t:"Menü, Antworten, Preislisten, Standort & Terminlink. Optional Erinnerungen & Follow-ups.",
+        f2:"Voice Assistent", f2t:"Telefon-Bot nimmt Anrufe an, versteht Intents („Termin“, „Öffnungszeiten“) und sendet Bestätigungen.",
+        f3:"Kalender & CRM", f3t:"Buchungen via Calendly/TidyCal. Alle Anfragen protokolliert. Gespräche nur nach Vereinbarung (Mo–So).",
+        prH:"Preise",
+        p1h:"Starter", p1v:"199€", pmo:"/ Monat", p1s:"Setup: 149€",
+        p1l:[
+          "WhatsApp-Assistent (Menü & Antworten)",
+          "Terminbuchung (Calendly/TidyCal)",
+          "Universelle Schnellantworten",
+          "Flexible Gesprächstermine (Mo–So)"
+        ],
+        p1c:"Starter anfragen",
+        p2h:"Pro", p2v:"499–699€", p2s:"Setup: 299€",
+        p2l:[
+          "WhatsApp + Voice (Telefon-Bot)",
+          "Erinnerungen & Follow-ups",
+          "Individuelle Antworten & PDFs/Links",
+          "Monatlicher Kurz-Report"
+        ],
+        p2c:"Pro anfragen",
+        offer:"Setup entfällt bei Abschluss am Tag des Erstgesprächs.",
+        legalH:"Rechtliches",
+        impTitle:"Impressum (§5 TMG)",
+        impProvLabel:"Dienstanbieter:",
+        impProv:"Neuro28 Business Services – Inhaber: David Romanovic Yurko",
+        impAddrLabel:"Geschäftsadresse:",
+        impContactLabel:"Kontakt:",
+        vatLabel:"USt-ID:",
+        vatNote:"(wird nachträglich ergänzt, sofern vorhanden)",
+        respLabel:"Inhaltlich verantwortlich i.S.d. § 18 Abs. 2 MStV:",
+        odrLabel:"Online-Streitbeilegung:",
+        ppTitle:"Datenschutzerklärung (DSGVO – Auszug)",
+        ppCtrlLabel:"Verantwortlicher:",
+        ppDataLabel:"Arten der verarbeiteten Daten:",
+        ppPurposeLabel:"Zwecke:",
+        ppLawLabel:"Rechtsgrundlagen (Art. 6 Abs. 1 DSGVO):",
+        ppVendorsLabel:"Dienstleister/Empfänger:",
+        ppRetentionLabel:"Speicherdauer:",
+        ppRightsLabel:"Betroffenenrechte:",
+        ppSecLabel:"Sicherheitsmaßnahmen:",
+        ppNote:"Hinweis: Vorlage – für Livebetrieb Anbieter-DPAs/Links ergänzen und prüfen lassen.",
+        tosTitle:"AGB (Kurzfassung)",
+        footLegal:"Impressum & Datenschutz"
+      }
+    };
+
+    function applyLang(lang){
+      const t = T[lang];
+      // Nav & hero
+      document.getElementById('navTag').textContent = t.navTag;
+      document.getElementById('navLeistungen').textContent = t.navLeistungen;
+      document.getElementById('navPreise').textContent = t.navPreise;
+      document.getElementById('navBuchen').textContent = (lang==='en'?'Book a Call':'Termin buchen');
+      document.getElementById('heroH1').innerHTML = t.heroH1;
+      document.getElementById('heroP').textContent = t.heroP;
+      document.getElementById('ctaBuchen').textContent = t.ctaBuchen;
+      document.getElementById('ctaPreise').textContent = t.ctaPreise;
+      document.getElementById('ctaWhatsApp').textContent = t.ctaWhatsApp;
+      // Features
+      document.getElementById('f1').textContent = t.f1; document.getElementById('f1t').textContent = t.f1t;
+      document.getElementById('f2').textContent = t.f2; document.getElementById('f2t').textContent = t.f2t;
+      document.getElementById('f3').textContent = t.f3; document.getElementById('f3t').textContent = t.f3t;
+      // Pricing
+      document.getElementById('prH').textContent = t.prH;
+      document.getElementById('p1h').textContent = t.p1h; document.getElementById('p1v').textContent = t.p1v;
+      document.getElementById('pmo').textContent = t.pmo; document.getElementById('p1s').textContent = t.p1s;
+      document.getElementById('p1l').innerHTML = t.p1l.map(x=>`<li>${x}</li>`).join('');
+      document.getElementById('p1c').textContent = t.p1c;
+      document.getElementById('p2h').textContent = t.p2h; document.getElementById('p2v').textContent = t.p2v; document.getElementById('p2s').textContent = t.p2s;
+      document.getElementById('p2l').innerHTML = t.p2l.map(x=>`<li>${x}</li>`).join('');
+      document.getElementById('p2c').textContent = t.p2c;
+      document.getElementById('offer').textContent = t.offer;
+      // Legal
+      document.getElementById('legalH').textContent = t.legalH;
+      document.getElementById('impTitle').textContent = t.impTitle;
+      document.getElementById('impProvLabel').textContent = t.impProvLabel;
+      document.getElementById('impProv').textContent = t.impProv;
+      document.getElementById('impAddrLabel').textContent = t.impAddrLabel;
+      document.getElementById('impContactLabel').textContent = t.impContactLabel;
+      document.getElementById('vatLabel').textContent = t.vatLabel;
+      document.getElementById('vatNote').textContent = t.vatNote;
+      document.getElementById('respLabel').textContent = t.respLabel;
+      document.getElementById('odrLabel').textContent = t.odrLabel;
+      document.getElementById('ppTitle').textContent = t.ppTitle;
+      document.getElementById('ppCtrlLabel').textContent = t.ppCtrlLabel;
+      document.getElementById('ppDataLabel').textContent = t.ppDataLabel;
+      document.getElementById('ppPurposeLabel').textContent = t.ppPurposeLabel;
+      document.getElementById('ppLawLabel').textContent = t.ppLawLabel;
+      document.getElementById('ppVendorsLabel').textContent = t.ppVendorsLabel;
+      document.getElementById('ppRetentionLabel').textContent = t.ppRetentionLabel;
+      document.getElementById('ppRightsLabel').textContent = t.ppRightsLabel;
+      document.getElementById('ppSecLabel').textContent = t.ppSecLabel;
+      document.getElementById('ppNote').textContent = t.ppNote;
+      document.getElementById('tosTitle').textContent = t.tosTitle;
+      document.getElementById('footLegal').textContent = t.footLegal;
+    }
+
+    // Toggle setup (DE default)
+    const toEN = document.getElementById('toEN');
+    let lang = 'de';
+    toEN.addEventListener('click', (e)=>{
+      e.preventDefault();
+      lang = (lang==='de'?'en':'de');
+      applyLang(lang);
+      // Toggle label
+      toEN.textContent = (lang==='de'?'EN':'DE');
+    });
   </script>
 </body>
 </html>
